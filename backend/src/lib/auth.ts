@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { APIError } from "better-auth/api";
 
 export const auth = betterAuth({
+	baseURL: process.env.FRONTEND_URL,
 	database: drizzleAdapter(db, {
 		provider: "pg",
 		schema: {
