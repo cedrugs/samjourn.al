@@ -27,8 +27,8 @@ const securityHeaders = {
 	"X-Content-Type-Options": "nosniff",
 	"X-Frame-Options": "SAMEORIGIN",
 	"Referrer-Policy": "strict-origin-when-cross-origin",
-	"Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-	"Content-Security-Policy": `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' ${s3Domain}; media-src 'self' blob: data: ${s3Domain}; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'`,
+	"Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+	"Content-Security-Policy": `default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' ${s3Domain} https://cloudflareinsights.com; media-src 'self' blob: data: ${s3Domain}; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'`,
 };
 
 await fastify.register(cors, {
@@ -109,6 +109,10 @@ if (isProd) {
 	fastify.setNotFoundHandler(async (request, reply) => {
 		if (request.url.startsWith("/api/")) {
 			return reply.status(404).send({ error: "Not found" });
+		}
+		// Don't serve HTML for static file requests
+		if (request.url.match(/\.(svg|txt|ico|png|jpg|jpeg|gif|css|js)$/)) {
+			return reply.status(404).send("Not found");
 		}
 		return serveIndex(reply);
 	});

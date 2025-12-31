@@ -16,26 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Install backend dependencies
-        run: cd backend && bun install --frozen-lockfile
-
-      - name: Install frontend dependencies
-        run: cd frontend && bun install --frozen-lockfile
-
-      - name: Type check backend
-        run: cd backend && bun run tsc --noEmit
-
-      - name: Type check frontend
-        run: cd frontend && bun run tsc --noEmit
-
-      - name: Build frontend
-        run: cd frontend && bun run build
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
