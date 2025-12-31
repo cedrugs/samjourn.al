@@ -7,6 +7,7 @@
 [![Fastify](https://img.shields.io/badge/Fastify-5.x-000000?logo=fastify)](https://fastify.dev)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169e1?logo=postgresql)](https://www.postgresql.org)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ed?logo=docker)](https://www.docker.com)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/cedrugs/samjourn.al/ci.yml?branch=main)](https://github.com/cedrugs/samjourn.al/actions)
 
 A minimalist personal journaling web application with a dark, calm, intentional design. Built for reflections and quiet time entries with optional audio attachments.
 
@@ -177,11 +178,13 @@ ADMIN_EMAIL=your@email.com ADMIN_NAME="Your Name" bun run src/seed.ts
 ### 8. Start development servers
 
 Terminal 1 (Backend):
+
 ```bash
 cd backend && bun run src/index.ts
 ```
 
 Terminal 2 (Frontend):
+
 ```bash
 cd frontend && bun run dev
 ```
@@ -324,6 +327,7 @@ Unique constraint on `(category, date)` ensures one post per category per day.
 ### Request/Response Examples
 
 #### Create Post
+
 ```bash
 POST /api/posts
 Content-Type: application/json
@@ -338,6 +342,7 @@ Content-Type: application/json
 ```
 
 #### Upload Audio
+
 ```bash
 POST /api/posts/:id/audio
 Content-Type: multipart/form-data
@@ -454,21 +459,25 @@ samjourn.al/
 ### Common Issues
 
 **OAuth Redirect Error**
+
 - Ensure `FRONTEND_URL` matches your domain
 - Verify Google OAuth redirect URI matches `{FRONTEND_URL}/auth/callback`
 - Check that the user exists in the database before attempting login
 
 **Database Connection Issues**
+
 - Verify PostgreSQL is running and accessible
 - Check `DATABASE_URL` format: `postgresql://user:password@host:port/database`
 - Run migrations: `bun run drizzle-kit push`
 
 **S3 Upload Failures**
+
 - Verify S3 credentials and bucket permissions
 - Check S3_ENDPOINT format (include https://)
 - Ensure bucket exists and is accessible
 
 **Docker Port Issues**
+
 - Docker exposes port 80, not 3000
 - Use `http://localhost` (not `http://localhost:3000`) for Docker
 - Check Caddy configuration in `Caddyfile`
