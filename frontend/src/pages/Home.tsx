@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { getPosts } from "../lib/api";
 import type { Post } from "../types";
 import { Input } from "../components/ui/input";
@@ -76,6 +77,10 @@ export function Home() {
 
     return (
         <div>
+            <Helmet>
+                <title>samjourn.al</title>
+                <meta name="description" content="A minimalist personal journaling web application for reflections and quiet time entries." />
+            </Helmet>
             <div className="flex flex-col gap-4 mb-6">
                 <Input
                     type="text"

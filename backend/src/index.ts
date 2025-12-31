@@ -71,8 +71,15 @@ fastify.get("/sitemap.xml", async (_, reply) => {
 
 if (isProd) {
 	await fastify.register(fastifyStatic, {
+		root: distPath,
+		prefix: "/",
+		decorateReply: false,
+	});
+
+	await fastify.register(fastifyStatic, {
 		root: join(distPath, "assets"),
 		prefix: "/assets/",
+		decorateReply: false,
 	});
 
 	function serveIndex(reply: any) {
@@ -81,9 +88,6 @@ if (isProd) {
 	}
 
 	fastify.get("/", async (_, reply) => serveIndex(reply));
-	fastify.get("/favicon.svg", async (_, reply) => reply.sendFile("favicon.svg", distPath));
-	fastify.get("/robots.txt", async (_, reply) => reply.sendFile("robots.txt", distPath));
-	fastify.get("/og-image.svg", async (_, reply) => reply.sendFile("og-image.svg", distPath));
 
 	fastify.setNotFoundHandler(async (request, reply) => {
 		if (request.url.startsWith("/api/")) {

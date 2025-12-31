@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { toast } from "sonner";
 import { getPosts, deletePost } from "../../lib/api";
 import type { Post } from "../../types";
@@ -92,6 +93,9 @@ export function AdminPosts() {
 
 	return (
 		<div>
+			<Helmet>
+				<title>Posts | samjourn.al</title>
+			</Helmet>
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="font-medium">Posts</h1>
 				<Link

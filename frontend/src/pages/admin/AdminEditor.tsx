@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { toast } from "sonner";
 import { Editor } from "../../components/Editor";
 import { createPost, updatePost, uploadAudio, getPostById, deletePost, ApiError } from "../../lib/api";
@@ -140,6 +141,9 @@ export function AdminEditor() {
 
     return (
         <div className="space-y-6">
+            <Helmet>
+                <title>{isEditing ? "Edit Post" : "New Post"} | samjourn.al</title>
+            </Helmet>
             <div className="flex justify-between items-center">
                 <h1 className="font-medium">
                     {isEditing ? "Edit Post" : "New Post"}
