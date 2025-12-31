@@ -10,6 +10,9 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 		},
 	},
+	build: {
+		copyPublicDir: true,
+	},
 	server: {
 		proxy: {
 			"/api": {

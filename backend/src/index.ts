@@ -81,9 +81,30 @@ if (isProd) {
 	}
 
 	fastify.get("/", async (_, reply) => serveIndex(reply));
-	fastify.get("/favicon.svg", async (_, reply) => reply.type("image/svg+xml").send(readFileSync(join(distPath, "favicon.svg"))));
-	fastify.get("/robots.txt", async (_, reply) => reply.type("text/plain").send(readFileSync(join(distPath, "robots.txt"))));
-	fastify.get("/og-image.svg", async (_, reply) => reply.type("image/svg+xml").send(readFileSync(join(distPath, "og-image.svg"))));
+	
+	fastify.get("/favicon.svg", async (_, reply) => {
+		try {
+			return reply.type("image/svg+xml").send(readFileSync(join(distPath, "favicon.svg")));
+		} catch {
+			return reply.status(404).send("Not found");
+		}
+	});
+	
+	fastify.get("/robots.txt", async (_, reply) => {
+		try {
+			return reply.type("text/plain").send(readFileSync(join(distPath, "robots.txt")));
+		} catch {
+			return reply.status(404).send("Not found");
+		}
+	});
+	
+	fastify.get("/og-image.svg", async (_, reply) => {
+		try {
+			return reply.type("image/svg+xml").send(readFileSync(join(distPath, "og-image.svg")));
+		} catch {
+			return reply.status(404).send("Not found");
+		}
+	});
 
 	fastify.setNotFoundHandler(async (request, reply) => {
 		if (request.url.startsWith("/api/")) {
